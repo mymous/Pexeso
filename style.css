@@ -1,0 +1,80 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: black;
+    justify-content: center;
+    padding: 50px;
+}
+
+#first-box, #second-box, #third-box, #fourth-box, #fifth-box, #sixth-box {
+    width: 30vw;
+    height: 30vh;
+    z-index: 0;
+}
+
+#first-box, #second-box, #fourth-box, #fifth-box {
+    margin-right: 20px;
+}
+
+#first-box, #second-box, #third-box {
+    margin-bottom: 20px;
+}
+
+#first-box, #fourth-box {
+    background-color: white;
+}
+
+.absolute-box {
+    position: absolute;
+    z-index: 1;
+}
+
+#first-absolute, #second-absolute, #third-absolute {
+    top: 5.3%;
+    padding: 50px;
+    width: 30vw;
+    height: 30vh;
+}
+
+#first-absolute {
+    left: 3.95%;
+    background-color: yellow;
+}
+
+#second-absolute {
+    left: 35%;
+    background-color: cyan;
+}
+
+#third-absolute {
+    left: 66.05%;
+    background-color: purple;
+}
+
+#fourth-absolute, #fifth-absolute, #sixth-absolute {
+    top: 37.5%;
+    padding: 50px;
+    width: 30vw;
+    height: 30vh;
+}
+
+#fourth-absolute {
+    left: 3.95%;
+    background-color: lightgreen;
+}
+
+#fifth-absolute {
+    left: 35%;
+    background-color:burlywood;
+}
+
+#sixth-absolute {
+    left: 66.05%;
+    background-color: gray;
+}
+
