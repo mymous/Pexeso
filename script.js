@@ -1,220 +1,80 @@
-window.onload=function() {
-    const absoluteOne = document.getElementById("first-absolute");
-    const absoluteTwo = document.getElementById("second-absolute");
-    const absoluteThree = document.getElementById("third-absolute");
-    const absoluteFour = document.getElementById("fourth-absolute");
-    const absoluteFive = document.getElementById("fifth-absolute");
-    const absoluteSix = document.getElementById("sixth-absolute");
-    absoluteOne.addEventListener("click", hide1);
-    absoluteTwo.addEventListener("click", hide2);
-    absoluteThree.addEventListener("click", hide3);
-    absoluteFour.addEventListener("click", hide4);
-    absoluteFive.addEventListener("click", hide5);
-    absoluteSix.addEventListener("click", hide6);
-    }
+window.onload =function() {
+        newGame();
+}
+
+let absoluteBoxes = document.getElementsByClassName("inner-box");
+for (let i = 0; i < absoluteBoxes.length; i++) {
+    absoluteBoxes[i].addEventListener("click", hide);
+}
+const NGButton = document.getElementById("newGameButton");
+NGButton.addEventListener("click", newGame);
 
 
-function hide1() {
-    var absoluteTwoHidden = document.getElementById("second-absolute").hidden;
-    var absoluteThreeHidden = document.getElementById("third-absolute").hidden;
-    var absoluteFourHidden = document.getElementById("fourth-absolute").hidden;
-    var absoluteFiveHidden = document.getElementById("fifth-absolute").hidden;
-    var absoluteSixHidden = document.getElementById("sixth-absolute").hidden;
+const flagArray = ["https://flagcdn.com/128x96/fr.png", "https://flagcdn.com/128x96/jp.png", "https://flagcdn.com/128x96/it.png", "https://flagcdn.com/128x96/cz.png", "https://flagcdn.com/128x96/at.png", "https://flagcdn.com/128x96/de.png", "https://flagcdn.com/128x96/es.png", "https://flagcdn.com/128x96/gb-eng.png"];
+const picturesArray = document.getElementsByClassName("picture");
 
+
+function randomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+function hide() {
     this.hidden = true;
     this.className += " clickedOn";
- 
-    if (absoluteTwoHidden && absoluteThreeHidden && absoluteFourHidden && absoluteFiveHidden && absoluteSixHidden) {
-        setTimeout(() => {
-            window.alert("You win!");
-    }, 500)
-    } else if (absoluteFourHidden) {
-        setTimeout(() => {
-        window.alert("Good job!");
-        var remove = document.querySelectorAll(".clickedOn");
-        for (let i=0; i < remove.length; i++) {
-                remove[i].setAttribute("class", "absolute-box");
+    this.previousElementSibling.className += " chosen";
+    let removeClickedOn = document.querySelectorAll(".clickedOn");
+    let removeChosen = document.querySelectorAll(".chosen");
+    if (removeClickedOn.length < 2) {
+    } else if (removeChosen[0].getAttribute("src") === removeChosen[1].getAttribute("src")) {
+        document.getElementById("feedback").innerText = "Good job!";
+        for (let i=0; i < removeClickedOn.length; i++) {
+            removeClickedOn[i].setAttribute("class", "inner-box");
         }
-    }, 500)
-    } else if (document.querySelectorAll(".clickedOn").length >= 2) {
-        setTimeout(() => {
-        window.alert("Wrong!");
-        var revert = document.querySelectorAll(".clickedOn");
-        for (let i=0; i < revert.length; i++) {
-            revert[i].removeAttribute("hidden");
-            revert[i].setAttribute("class", "absolute-box");
+        for (let i=0; i < removeChosen.length; i++) {
+            removeChosen[i].setAttribute("class", "picture");
         }
-    }, 500)
+    } else {
+        setTimeout(() => {
+            document.getElementById("feedback").innerText = "Wrong!";
+         for (let i=0; i < removeClickedOn.length; i++) {
+                 removeClickedOn[i].setAttribute("class", "inner-box");
+                 removeClickedOn[i].removeAttribute("hidden");
+        }
+         for (let i=0; i < removeChosen.length; i++) {
+                 removeChosen[i].setAttribute("class", "picture");
+        }
+        }, 1000)   
     }
 }
 
-function hide2() {
-    var absoluteOneHidden = document.getElementById("first-absolute").hidden;
-    var absoluteThreeHidden = document.getElementById("third-absolute").hidden;
-    var absoluteFourHidden = document.getElementById("fourth-absolute").hidden;
-    var absoluteFiveHidden = document.getElementById("fifth-absolute").hidden;
-    var absoluteSixHidden = document.getElementById("sixth-absolute").hidden;
+function newGame () {
+    let flagArrayCopy = ["https://flagcdn.com/128x96/fr.png", "https://flagcdn.com/128x96/jp.png", "https://flagcdn.com/128x96/it.png", "https://flagcdn.com/128x96/cz.png", "https://flagcdn.com/128x96/at.png", "https://flagcdn.com/128x96/de.png", "https://flagcdn.com/128x96/es.png", "https://flagcdn.com/128x96/gb-eng.png"];
+    const removeHidden = document.querySelectorAll(".inner-box");
+    const removeDone = document.querySelectorAll(".done");
 
-    document.getElementById("second-absolute").hidden = true;
-    document.getElementById("second-absolute").className += " clickedOn";
- 
-    if (absoluteOneHidden && absoluteThreeHidden && absoluteFourHidden && absoluteFiveHidden && absoluteSixHidden) {
-        setTimeout(() => {
-            window.alert("You win!");
-    }, 500)
-    } else if (absoluteThreeHidden) {
-        setTimeout(() => {
-        window.alert("Good job!");
-        var remove = document.querySelectorAll(".clickedOn");
-        for (let i=0; i < remove.length; i++) {
-                remove[i].setAttribute("class", "absolute-box");
+    document.getElementById("feedback").innerText = "Click on a pair!";
+
+    for (let i=0; i < removeHidden.length; i++) {
+        removeHidden[i].removeAttribute("hidden");
+    }
+    for (let i=0; i < removeDone.length; i++) {
+        removeDone[i].setAttribute("class", "picture");
+    }
+    for (let i=0; i < picturesArray.length; i++) {
+        const randomNumber = randomInteger(0, flagArrayCopy.length);
+        if ((flagArrayCopy.length === 0) && (document.getElementsByClassName("done").length < 15)) {
+            const specialRandomNumber = randomInteger(0, 8);
+            flagArrayCopy = ["https://flagcdn.com/128x96/fr.png", "https://flagcdn.com/128x96/jp.png", "https://flagcdn.com/128x96/it.png", "https://flagcdn.com/128x96/cz.png", "https://flagcdn.com/128x96/at.png", "https://flagcdn.com/128x96/de.png", "https://flagcdn.com/128x96/es.png", "https://flagcdn.com/128x96/gb-eng.png"];
+            picturesArray[i].setAttribute("src", flagArrayCopy[specialRandomNumber]);
+            picturesArray[i].className += " done";
+            flagArrayCopy.splice(specialRandomNumber, 1);
+            console.log("Pog");
+        } else {
+            picturesArray[i].setAttribute("src", flagArrayCopy[randomNumber]);
+            picturesArray[i].className += " done";
+            flagArrayCopy.splice(randomNumber, 1);
         }
-    }, 500)
-    } else if (document.querySelectorAll(".clickedOn").length >= 2) {
-        setTimeout(() => {
-            window.alert("Wrong!");
-            var revert = document.querySelectorAll(".clickedOn");
-            for (let i=0; i < revert.length; i++) {
-                revert[i].removeAttribute("hidden");
-                revert[i].setAttribute("class", "absolute-box");
-            }
-        }, 500)
     }
 }
 
-function hide3() {
-    var absoluteOneHidden = document.getElementById("first-absolute").hidden;
-    var absoluteTwoHidden = document.getElementById("second-absolute").hidden;
-    var absoluteFourHidden = document.getElementById("fourth-absolute").hidden;
-    var absoluteFiveHidden = document.getElementById("fifth-absolute").hidden;
-    var absoluteSixHidden = document.getElementById("sixth-absolute").hidden;
 
-    document.getElementById("third-absolute").hidden = true;
-    document.getElementById("third-absolute").className += " clickedOn";
- 
-    if (absoluteOneHidden && absoluteTwoHidden && absoluteFourHidden && absoluteFiveHidden && absoluteSixHidden) {
-        setTimeout(() => {
-            window.alert("You win!");
-    }, 500)
-    } else if (absoluteTwoHidden) {
-        setTimeout(() => {
-        window.alert("Good job!");
-        var remove = document.querySelectorAll(".clickedOn");
-        for (let i=0; i < remove.length; i++) {
-                remove[i].setAttribute("class", "absolute-box");
-        }
-    }, 500)
-    } else if (document.querySelectorAll(".clickedOn").length >= 2) {
-        setTimeout(() => {
-            window.alert("Wrong!");
-            var revert = document.querySelectorAll(".clickedOn");
-            for (let i=0; i < revert.length; i++) {
-                revert[i].removeAttribute("hidden");
-                revert[i].setAttribute("class", "absolute-box");
-            }
-        }, 500)
-    }
-}
-
-function hide4() {
-    var absoluteOneHidden = document.getElementById("first-absolute").hidden;
-    var absoluteTwoHidden = document.getElementById("second-absolute").hidden;
-    var absoluteThreeHidden = document.getElementById("third-absolute").hidden;
-    var absoluteFiveHidden = document.getElementById("fifth-absolute").hidden;
-    var absoluteSixHidden = document.getElementById("sixth-absolute").hidden;
-
-    document.getElementById("fourth-absolute").hidden = true;
-    document.getElementById("fourth-absolute").className += " clickedOn";
-
-    if (absoluteOneHidden && absoluteTwoHidden && absoluteThreeHidden && absoluteFiveHidden && absoluteSixHidden) {
-        setTimeout(() => {
-            window.alert("You win!");
-    }, 500)
-    } else if (absoluteOneHidden) {
-        setTimeout(() => {
-        window.alert("Good job!");
-        var remove = document.querySelectorAll(".clickedOn");
-        for (let i=0; i < remove.length; i++) {
-                remove[i].setAttribute("class", "absolute-box");
-        }
-    }, 500)
-    } else if (document.querySelectorAll(".clickedOn").length >= 2) {
-        setTimeout(() => {
-            window.alert("Wrong!");
-            var revert = document.querySelectorAll(".clickedOn");
-            for (let i=0; i < revert.length; i++) {
-                revert[i].removeAttribute("hidden");
-                revert[i].setAttribute("class", "absolute-box");
-            }
-        }, 500)
-    }
-}
-
-function hide5() {
-    var absoluteOneHidden = document.getElementById("first-absolute").hidden;
-    var absoluteTwoHidden = document.getElementById("second-absolute").hidden;
-    var absoluteThreeHidden = document.getElementById("third-absolute").hidden;
-    var absoluteFourHidden = document.getElementById("fourth-absolute").hidden;
-    var absoluteSixHidden = document.getElementById("sixth-absolute").hidden;
-
-    document.getElementById("fifth-absolute").hidden = true;
-    document.getElementById("fifth-absolute").className += " clickedOn";
-
-    
-    if (absoluteOneHidden && absoluteTwoHidden && absoluteThreeHidden && absoluteFourHidden && absoluteSixHidden) {
-        setTimeout(() => {
-            window.alert("You win!");
-    }, 500)
-    } else if (absoluteSixHidden) {
-        setTimeout(() => {
-        window.alert("Good job!");
-        var remove = document.querySelectorAll(".clickedOn");
-        for (let i=0; i < remove.length; i++) {
-                remove[i].setAttribute("class", "absolute-box");
-        }
-    }, 500)
-    } else if (document.querySelectorAll(".clickedOn").length >= 2) {
-        setTimeout(() => {
-            window.alert("Wrong!");
-            var revert = document.querySelectorAll(".clickedOn");
-            for (let i=0; i < revert.length; i++) {
-                revert[i].removeAttribute("hidden");
-                revert[i].setAttribute("class", "absolute-box");
-            }
-        }, 500)
-    }
-}
-
-function hide6() {
-    var absoluteOneHidden = document.getElementById("first-absolute").hidden;
-    var absoluteTwoHidden = document.getElementById("second-absolute").hidden;
-    var absoluteThreeHidden = document.getElementById("third-absolute").hidden;
-    var absoluteFourHidden = document.getElementById("fourth-absolute").hidden;
-    var absoluteFiveHidden = document.getElementById("fifth-absolute").hidden;
-
-    document.getElementById("sixth-absolute").hidden = true;
-    document.getElementById("sixth-absolute").className += " clickedOn";
-
-    if (absoluteOneHidden && absoluteTwoHidden && absoluteThreeHidden && absoluteFourHidden && absoluteFiveHidden) {
-        setTimeout(() => {
-            window.alert("You win!");
-    }, 500)
-    } else if (absoluteFiveHidden) {
-        setTimeout(() => {
-            window.alert("Good job!");
-            var remove = document.querySelectorAll(".clickedOn");
-            for (let i=0; i < remove.length; i++) {
-                remove[i].setAttribute("class", "absolute-box");
-            }
-    }, 500)
-    } else if (document.querySelectorAll(".clickedOn").length >= 2) {
-        setTimeout(() => {
-            window.alert("Wrong!");
-            var revert = document.querySelectorAll(".clickedOn");
-            for (let i=0; i < revert.length; i++) {
-                revert[i].removeAttribute("hidden");
-                revert[i].setAttribute("class", "absolute-box");
-            }
-        }, 500)
-    }
-}
